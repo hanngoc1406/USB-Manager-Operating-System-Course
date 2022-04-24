@@ -4,7 +4,7 @@
 
 **Nội dung**
 - Hiểu về hệ điều hành và hàm API trên windows
-- Viết một phần mềm cơ bản để nhận diện USB và Safe Remove USB dùng C# Winform
+- Viết một phần mềm cơ bản để nhận diện USB và Safe Remove USB sử dụng C# Winform
 
 **Tài liệu tham khảo**
 
