@@ -101,9 +101,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\ducph\\Source\\Repos\\USB-Manager-Operating-System-Course\\UsbManager-Test\\UsbManager.csproj",
-      "projectName": "UsbManager",
-      "projectPath": "C:\\Users\\ducph\\Source\\Repos\\USB-Manager-Operating-System-Course\\UsbManager-Test\\UsbManager.csproj",
+      "projectUniqueName": "C:\\Users\\ducph\\Source\\Repos\\USB-Manager-Operating-System-Course\\UsbManager-Test\\UsbManager-Test.csproj",
+      "projectName": "UsbManager-Test",
+      "projectPath": "C:\\Users\\ducph\\Source\\Repos\\USB-Manager-Operating-System-Course\\UsbManager-Test\\UsbManager-Test.csproj",
       "packagesPath": "C:\\Users\\ducph\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\ducph\\Source\\Repos\\USB-Manager-Operating-System-Course\\UsbManager-Test\\obj\\",
       "projectStyle": "PackageReference",

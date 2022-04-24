@@ -41,8 +41,6 @@ namespace UsbManager_Test
                 ref int bytesReturned, 
                 IntPtr overlapped);
 
-
-
             // Eject USB
             public static string EjectUSB(char driveLetterCharacter)
             {
@@ -51,7 +49,8 @@ namespace UsbManager_Test
                 
                 if ((long)handle == -1)
                 {
-                    return "Không thể tháo usb! " + driveLetterCharacter + handle;
+                    var result = string.Format("Không thể tháo USB({0}) do đang được chạy ở phần mềm khác", driveLetterCharacter);
+                    return result;
                 }
 
                 int dummy = 0;
@@ -76,9 +75,10 @@ namespace UsbManager_Test
                 {
                     double totalSize = (drive.TotalSize) / (1024.0 * 1024.0 * 1024.0);
                     double freeSpace = (drive.AvailableFreeSpace) / (1024.0 * 1024.0 * 1024.0);
-                    listBox1.Items.Add(String.Format("{0}{1} - {2} free of {3}", drive.Name ,drive.VolumeLabel, freeSpace.ToString("N1"), totalSize.ToString("N1")));
+                    listBox1.Items.Add(string.Format("{0}{1} - {2} free of {3}", drive.Name, drive.VolumeLabel, freeSpace.ToString("N1"), totalSize.ToString("N1")));
                 }
             }
+
         }
 
         private void removeButton_Click(object sender, EventArgs e)

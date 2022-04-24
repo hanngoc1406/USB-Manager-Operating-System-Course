@@ -70,6 +70,7 @@
             this.Controls.Add(this.removeButton);
             this.Controls.Add(this.refreshButton);
             this.Controls.Add(this.listBox1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Form1";
             this.Text = "USB Manager";
             this.ResumeLayout(false);
