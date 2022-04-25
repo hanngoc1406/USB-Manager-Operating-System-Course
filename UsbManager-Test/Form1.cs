@@ -72,7 +72,7 @@ namespace UsbManager_Test
 
                 // Just close handle
                 CloseHandle(handle);
-                return "Đã ngắt kết nốt usb thành công";
+                return "Đã ngắt kết nốt USB!";
             }
         }
 
@@ -101,7 +101,7 @@ namespace UsbManager_Test
             {
                 string status = USBManager.EjectUSB(Convert.ToChar(drives.FirstOrDefault().Name.Replace(":\\", "")));
                 DialogResult check = MessageBox.Show(status);
-
+               
                 if (DialogResult.OK == check && status == "Đã tháo usb thành công")
                 {
                     listBox1.Items.Clear();
