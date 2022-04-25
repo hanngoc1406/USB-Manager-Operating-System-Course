@@ -12,6 +12,7 @@ namespace UsbManager_Test
             const int OPEN_EXISTING = 3;
             const uint GENERIC_READ = 0x80000000;
             const uint GENERIC_WRITE = 0x40000000;
+            // Default value to Ejects media from a SCSI device
             const uint IOCTL_STORAGE_EJECT_MEDIA = 0x2D4808;
 
             [DllImport("kernel32")]
@@ -28,9 +29,13 @@ namespace UsbManager_Test
                 IntPtr templateFile);
 
             [DllImport("kernel32")]
+            // Closes an open object handle.
+            // Dong mot doi tuong handle dang mo
             private static extern int CloseHandle(IntPtr handle);
 
             [DllImport("kernel32")]
+
+            //
             private static extern int DeviceIoControl(
                 IntPtr deviceHandle, 
                 uint ioControlCode, 
@@ -44,19 +49,30 @@ namespace UsbManager_Test
             // Eject USB
             public static string EjectUSB(char driveLetterCharacter)
             {
+                // DOS device paths: \\.\driveLetterCharacter:
                 string pathfordrive = "\\\\.\\" + driveLetterCharacter + ":";
+
+                // Create handle to use device
                 IntPtr handle = CreateFile(pathfordrive, GENERIC_READ | GENERIC_WRITE, 0, IntPtr.Zero, OPEN_EXISTING, 0, IntPtr.Zero);
                 
+
+                // if CreateFile()'s return value < 0 that mean the function was unable to create the specified file.
                 if ((long)handle == -1)
                 {
-                    var result = string.Format("Không thể tháo USB({0}) do đang được chạy ở phần mềm khác", driveLetterCharacter);
+                    int error = Marshal.GetLastWin32Error();
+                    var result = string.Format("Không thể ngắt kết nối USB({0}) - Error code {1}", driveLetterCharacter, error);
                     return result;
                 }
 
+                // Just make some variable for require ref keyword
                 int dummy = 0;
+
+                // Just function to send control code
                 DeviceIoControl(handle, IOCTL_STORAGE_EJECT_MEDIA, IntPtr.Zero, 0, IntPtr.Zero, 0, ref dummy, IntPtr.Zero);
+
+                // Just close handle
                 CloseHandle(handle);
-                return "Đã tháo usb thành công";
+                return "Đã ngắt kết nốt usb thành công";
             }
         }
 
@@ -67,18 +83,14 @@ namespace UsbManager_Test
 
         private void refreshButton_Click(object sender, EventArgs e)
         {
-            var drives = DriveInfo.GetDrives();
+            var drives = DriveInfo.GetDrives().Where(d => d.IsReady & d.DriveType == DriveType.Removable);
 
-            foreach (var drive in drives)
+            if (drives.FirstOrDefault() != null)
             {
-                if (drive.IsReady & drive.DriveType == DriveType.Removable)
-                {
-                    double totalSize = (drive.TotalSize) / (1024.0 * 1024.0 * 1024.0);
-                    double freeSpace = (drive.AvailableFreeSpace) / (1024.0 * 1024.0 * 1024.0);
-                    listBox1.Items.Add(string.Format("{0}{1} - {2} free of {3}", drive.Name, drive.VolumeLabel, freeSpace.ToString("N1"), totalSize.ToString("N1")));
-                }
+                double totalSize = (drives.FirstOrDefault().TotalSize) / (1024.0 * 1024.0 * 1024.0);
+                double freeSpace = (drives.FirstOrDefault().AvailableFreeSpace) / (1024.0 * 1024.0 * 1024.0);
+                listBox1.Items.Add(string.Format("{0}{1} - {2} free of {3}", drives.FirstOrDefault().Name, drives.FirstOrDefault().VolumeLabel, freeSpace.ToString("N1"), totalSize.ToString("N1")));
             }
-
         }
 
         private void removeButton_Click(object sender, EventArgs e)
